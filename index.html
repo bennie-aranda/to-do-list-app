@@ -84,6 +84,7 @@
         .complete {
             text-decoration: line-through;
         }
+        /* Ensure the delete button has a fixed size */
         .delete-btn {
             background: red;
             color: white;
@@ -91,6 +92,10 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
+            width: 100px; /* Fixed width */
+            text-align: center; 
+            display: inline-block; 
+            font-size: 14px; /* Adjust size to fit your design */
         }
         .task-info {
             display: flex;
@@ -102,20 +107,23 @@
             display: flex;
             gap: 10px;
         }
+
+        /* Media Queries for responsive layout */
+        @media (min-width: 600px) {
+            .container {
+                width: 400px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>To-Do List</h1>
         <button class="settings-btn"><i class="fas fa-cog"></i></button>
-        <input type="text" id="taskInput" placeholder="Add a new task">
-        <input type="date" id="dateInput" required>
+        <input type="text" id="taskInput" placeholder="Add a new task" aria-label="Task input">
+        <input type="date" id="dateInput" required aria-label="Task date">
         <div class="time-container">
-            <input type="text" id="timeInput" placeholder="Enter time (e.g., 2:00)">
-            <select id="amPmSelect">
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-            </select>
+            <input type="time" id="timeInput" aria-label="Task time">
         </div>
         <button id="addTaskBtn">Add Task</button>
         <ul id="taskList"></ul>
@@ -123,11 +131,11 @@
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <h2>Settings</h2>
-            <label>
-                <input type="radio" name="timeFormat" value="24" checked> Military Time (24-hour)
+            <label for="timeFormat24">
+                <input type="radio" id="timeFormat24" name="timeFormat" value="24" checked> Military Time (24-hour)
             </label>
-            <label>
-                <input type="radio" name="timeFormat" value="12"> Standard Time (12-hour)
+            <label for="timeFormat12">
+                <input type="radio" id="timeFormat12" name="timeFormat" value="12"> Standard Time (12-hour)
             </label>
             <button id="saveSettingsBtn">Save</button>
         </div>

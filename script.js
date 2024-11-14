@@ -20,11 +20,10 @@ function addTask() {
     const taskInput = document.getElementById('taskInput');
     const dateInput = document.getElementById('dateInput');
     const timeInput = document.getElementById('timeInput');
-    const amPmSelect = document.getElementById('amPmSelect');
     const taskText = taskInput.value.trim();
     const taskDate = dateInput.value;
     const taskTime = timeInput.value;
-    const amPm = amPmSelect.value;
+    const timeFormat = localStorage.getItem('timeFormat') || '24';
 
     if (taskText === '' || taskDate === '') {
         alert('Please enter a task and select a date.');
@@ -37,8 +36,7 @@ function addTask() {
     taskInfo.className = 'task-info';
 
     const formattedDate = formatDate(taskDate);
-    const timeFormat = localStorage.getItem('timeFormat') || '24';
-    const formattedTime = taskTime ? formatTime(taskTime, amPm, timeFormat) : '';
+    const formattedTime = taskTime ? formatTime(taskTime, timeFormat) : '';
 
     const taskContent = document.createElement('span');
     taskContent.textContent = formattedTime ? `${taskText} - ${formattedDate} ${formattedTime}` : `${taskText} - ${formattedDate}`;
@@ -57,6 +55,7 @@ function addTask() {
         li.classList.toggle('complete');
     });
     taskList.appendChild(li);
+
     taskInput.value = '';
     dateInput.value = '';
     timeInput.value = '';
@@ -67,17 +66,17 @@ function formatDate(dateString) {
     return `${month}/${day}/${year}`;
 }
 
-function formatTime(timeString, amPm, format) {
+function formatTime(timeString, format) {
+    let [hours, minutes] = timeString.split(':');
+    hours = parseInt(hours);
+
     if (format === '12') {
-        const [hours, minutes] = timeString.split(':');
-        let hour = parseInt(hours);
-        if (amPm === 'PM' && hour < 12) {
-            hour += 12;
-        } else if (amPm === 'AM' && hour === 12) {
-            hour = 0;
-        }
-        const formattedHour = hour % 12 || 12;
-        return `${formattedHour}:${minutes} ${amPm}`;
+        let amPm = hours >= 12 ? 'PM' : 'AM';
+        if (hours > 12) hours -= 12;
+        if (hours === 0) hours = 12;  // Special case for 12 AM
+        return `${hours}:${minutes} ${amPm}`;
+    } else {
+        // For 24-hour format, ensure 2 digits for hours
+        return `${hours < 10 ? '0' : ''}${hours}:${minutes}`;
     }
-    return timeString; // 24-hour format
 }
