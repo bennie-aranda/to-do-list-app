@@ -19,15 +19,19 @@ function addTask() {
     const li = document.createElement('li');
     li.textContent = taskText;
 
-    li.addEventListener('click', function () {
-        li.classList.toggle('complete');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.addEventListener('click', function () {
+        taskList.removeChild(li);
     });
 
-    li.addEventListener('dblclick', function () {
-        taskList.removeChild(li);
+    li.appendChild(deleteBtn);
+
+    li.addEventListener('click', function () {
+        li.classList.toggle('complete');
     });
 
     taskList.appendChild(li);
     taskInput.value = '';
 }
-

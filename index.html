@@ -30,9 +30,20 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .complete {
             text-decoration: line-through;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -43,6 +54,6 @@
         <button id="addTaskBtn">Add Task</button>
         <ul id="taskList"></ul>
     </div>
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
