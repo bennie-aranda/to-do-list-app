@@ -4,29 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        
+        /* Add some basic styling */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: rgba(0, 0, 139, 0.9); /* Dark blue with transparency */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: white;
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.1); /* White with transparency */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+        .settings-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            color: black;
+        }
+        input, button, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid white;
+            box-sizing: border-box;
+        }
+        input[type="text"], input[type="date"], input[type="time"], input[type="text"], select {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+        }
+        button {
+            background: #0066cc; /* Medium blue */
+            color: white;
+            cursor: pointer;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
         li {
-            background: #eee;
+            background: rgba(255, 255, 255, 0.3); /* White with more transparency */
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
@@ -45,15 +92,46 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .task-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .time-container {
+            display: flex;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>To-Do List</h1>
+        <button class="settings-btn"><i class="fas fa-cog"></i></button>
         <input type="text" id="taskInput" placeholder="Add a new task">
+        <input type="date" id="dateInput" required>
+        <div class="time-container">
+            <input type="text" id="timeInput" placeholder="Enter time (e.g., 2:00)">
+            <select id="amPmSelect">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+        </div>
         <button id="addTaskBtn">Add Task</button>
         <ul id="taskList"></ul>
     </div>
-    <script src="app.js"></script>
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <label>
+                <input type="radio" name="timeFormat" value="24" checked> Military Time (24-hour)
+            </label>
+            <label>
+                <input type="radio" name="timeFormat" value="12"> Standard Time (12-hour)
+            </label>
+            <button id="saveSettingsBtn">Save</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
